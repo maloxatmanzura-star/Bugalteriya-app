@@ -1,0 +1,2043 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Hisobchi — kichik biznes uchun hisob-kitob</title>
+    <style>
+      :root {
+        --bg: #f3f5f2;
+        --card: #fff;
+        --ink: #14231d;
+        --mut: #66766e;
+        --line: #dde4df;
+        --brand: #0f5c48;
+        --brand2: #e9f3ee;
+        --acc: #d98a1c;
+        --red: #c2410c;
+        --ok: #15803d;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #0e1714;
+          --card: #16221d;
+          --ink: #e8f0ec;
+          --mut: #8fa39a;
+          --line: #26362f;
+          --brand: #3fb894;
+          --brand2: #1b2e27;
+          --acc: #f0a73a;
+          --red: #f28a5b;
+          --ok: #4ade80;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #0e1714;
+        --card: #16221d;
+        --ink: #e8f0ec;
+        --mut: #8fa39a;
+        --line: #26362f;
+        --brand: #3fb894;
+        --brand2: #1b2e27;
+        --acc: #f0a73a;
+        --red: #f28a5b;
+        --ok: #4ade80;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          15px/1.5 "Segoe UI",
+          system-ui,
+          -apple-system,
+          Roboto,
+          sans-serif;
+      }
+      .app {
+        display: grid;
+        grid-template-columns: 230px 1fr;
+        min-height: 100vh;
+      }
+      aside {
+        background: var(--brand);
+        color: #fff;
+        padding: 20px 12px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      :root[data-theme="dark"] aside,
+      :root:not([data-theme="light"]) aside {
+        --x: 0;
+      }
+      .logo {
+        font:
+          700 22px Georgia,
+          "Times New Roman",
+          serif;
+        padding: 4px 12px 18px;
+        letter-spacing: 0.3px;
+      }
+      .logo i {
+        color: #f7c66b;
+        font-style: normal;
+      }
+      aside button {
+        all: unset;
+        cursor: pointer;
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: #d6ebe2;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      aside button:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      aside button.on {
+        background: #fff;
+        color: #0f5c48;
+        font-weight: 600;
+      }
+      aside button:focus-visible,
+      .btn:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 2px solid var(--acc);
+        outline-offset: 2px;
+      }
+      .sp {
+        flex: 1;
+      }
+      main {
+        padding: 24px 28px;
+        max-width: 1150px;
+        width: 100%;
+        min-width: 0;
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      h1 {
+        font:
+          600 26px Georgia,
+          serif;
+        margin: 0;
+      }
+      .btn {
+        cursor: pointer;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--ink);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font: inherit;
+      }
+      .btn.p {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: #fff;
+        font-weight: 600;
+      }
+      :root[data-theme="dark"] .btn.p {
+        color: #08140f;
+      }
+      .btn.s {
+        padding: 4px 10px;
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        margin-bottom: 16px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .kpi small {
+        color: var(--mut);
+      }
+      .kpi b {
+        display: block;
+        font:
+          600 24px Georgia,
+          serif;
+        margin-top: 2px;
+      }
+      .two {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 2fr 1fr;
+      }
+      .tw {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th {
+        text-align: left;
+        color: var(--mut);
+        font-weight: 500;
+        font-size: 13px;
+        padding: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      td {
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+      }
+      td.n,
+      th.n {
+        text-align: right;
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      .tag {
+        padding: 2px 9px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--brand2);
+        color: var(--brand);
+      }
+      .tag.paid {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .tag.over {
+        background: #ffedd5;
+        color: #9a3412;
+      }
+      .tag.sent {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .tag.draft {
+        background: #e5e7eb;
+        color: #374151;
+      }
+      .tag.low {
+        background: #ffedd5;
+        color: #9a3412;
+      }
+      .mut {
+        color: var(--mut);
+      }
+      .bar {
+        height: 8px;
+        border-radius: 9px;
+        background: var(--brand2);
+        overflow: hidden;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        background: var(--brand);
+      }
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 9;
+      }
+      .modal .card {
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow: auto;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--mut);
+        margin: 10px 0 4px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--ink);
+        font: inherit;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1.4fr auto;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .f {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        margin-top: 16px;
+      }
+      .search {
+        max-width: 260px;
+      }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--ink);
+        color: var(--bg);
+        padding: 10px 18px;
+        border-radius: 8px;
+        z-index: 10;
+      }
+      @media (max-width: 800px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        aside {
+          position: static;
+          height: auto;
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding: 10px;
+        }
+        .logo {
+          width: 100%;
+          padding: 4px 8px;
+        }
+        .sp {
+          display: none;
+        }
+        aside button {
+          padding: 7px 10px;
+        }
+        main {
+          padding: 16px;
+        }
+        .two {
+          grid-template-columns: 1fr;
+        }
+      }
+      .lsw {
+        display: inline-flex;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .lsw button {
+        all: unset;
+        cursor: pointer;
+        padding: 5px 9px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #cfe6dc;
+      }
+      .lsw button:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .lsw button.on {
+        background: #fff;
+        color: #0b3d30;
+      }
+      .lsw button:focus-visible {
+        outline: 2px solid #f2b04a;
+      }
+      aside {
+        background: #0b3d30;
+      }
+      aside .lsw {
+        margin: 8px 12px;
+        align-self: flex-start;
+      }
+      aside button span {
+        display: inline-block;
+        width: 18px;
+        text-align: center;
+      }
+      @media (max-width: 860px) {
+        .lp-nav .lp-w {
+          gap: 10px;
+          padding: 0 14px;
+        }
+        .lp-nav .lb {
+          padding: 8px 10px;
+          font-size: 13px;
+        }
+        aside .lsw {
+          margin: 4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <style>
+      #lp {
+        --g: #0b3d30;
+        --g2: #0f5c48;
+        --am: #f2b04a;
+        color: var(--ink);
+        font-family: "Segoe UI", system-ui, sans-serif;
+      }
+      #lp h1,
+      #lp h2,
+      #lp h3 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 600;
+        margin: 0;
+      }
+      .lp-w {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .lp-nav {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: rgba(11, 61, 48, 0.92);
+        backdrop-filter: blur(10px);
+        color: #fff;
+      }
+      .lp-nav .lp-w {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        height: 64px;
+      }
+      .lp-nav a {
+        color: #cfe6dc;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      .lp-nav a:hover {
+        color: #fff;
+      }
+      .lp-logo {
+        font:
+          700 22px Georgia,
+          serif;
+        color: #fff !important;
+      }
+      .lp-logo i {
+        color: var(--am);
+        font-style: normal;
+      }
+      .lp-sp {
+        flex: 1;
+      }
+      .lb {
+        cursor: pointer;
+        border: 0;
+        border-radius: 10px;
+        padding: 11px 20px;
+        font: 600 15px inherit;
+        font-family: inherit;
+        background: var(--am);
+        color: #2a1c00;
+      }
+      .lb.o {
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+      }
+      .lb.d {
+        background: var(--g2);
+        color: #fff;
+      }
+      .lb:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 2px;
+      }
+      .lp-hero {
+        background:
+          radial-gradient(900px 500px at 80% 10%, #1b7a5f 0, transparent 60%),
+          var(--g);
+        color: #fff;
+        padding: 72px 0 0;
+        overflow: hidden;
+      }
+      .lp-hero .lp-w {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 40px;
+        align-items: center;
+      }
+      .lp-hero h1 {
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1.05;
+        letter-spacing: -0.5px;
+      }
+      .lp-hero p {
+        color: #bcd9cd;
+        font-size: 18px;
+        max-width: 460px;
+        margin: 18px 0 26px;
+      }
+      .lp-badge {
+        display: inline-block;
+        border: 1px solid rgba(242, 176, 74, 0.5);
+        color: var(--am);
+        padding: 4px 12px;
+        border-radius: 99px;
+        font-size: 13px;
+        margin-bottom: 18px;
+      }
+      .lp-stage {
+        position: relative;
+        height: 430px;
+      }
+      .fc {
+        position: absolute;
+        background: #fff;
+        color: #14231d;
+        border-radius: 14px;
+        padding: 16px;
+        box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+        font-size: 13px;
+      }
+      .fc small {
+        color: #66766e;
+      }
+      .fc b {
+        font:
+          600 22px Georgia,
+          serif;
+        display: block;
+      }
+      .fc.a {
+        left: 0;
+        top: 10px;
+        width: 320px;
+        transform: rotate(-2deg);
+      }
+      .fc.b {
+        right: 0;
+        top: 0;
+        width: 220px;
+        transform: rotate(2.5deg);
+      }
+      .fc.c {
+        right: 20px;
+        top: 190px;
+        width: 250px;
+        transform: rotate(-1.5deg);
+      }
+      .fc.d {
+        left: 40px;
+        top: 250px;
+        width: 230px;
+        transform: rotate(1.5deg);
+      }
+      .fc .mt {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #e6ece8;
+      }
+      .fc .ok {
+        background: #dcfce7;
+        color: #166534;
+        padding: 1px 8px;
+        border-radius: 99px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .lp-sec {
+        padding: 84px 0;
+      }
+      .lp-sec h2 {
+        font-size: clamp(28px, 3.4vw, 42px);
+        max-width: 640px;
+        line-height: 1.12;
+      }
+      .lp-sec .sub {
+        color: var(--mut);
+        max-width: 560px;
+        margin: 12px 0 36px;
+        font-size: 17px;
+      }
+      .bento {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 14px;
+      }
+      .bx {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 24px;
+        grid-column: span 2;
+        min-height: 190px;
+      }
+      .bx.w {
+        grid-column: span 3;
+      }
+      .bx.big {
+        grid-column: span 4;
+        background: var(--g);
+        color: #fff;
+        border-color: var(--g);
+      }
+      .bx h3 {
+        font-size: 20px;
+        margin: 10px 0 6px;
+      }
+      .bx p {
+        margin: 0;
+        color: var(--mut);
+      }
+      .bx.big p {
+        color: #bcd9cd;
+      }
+      .ic {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--brand2);
+        color: var(--brand);
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+      }
+      .bx.big .ic {
+        background: rgba(255, 255, 255, 0.12);
+        color: var(--am);
+      }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border-top: 1px solid var(--line);
+      }
+      .steps div {
+        padding: 26px 24px 0 0;
+      }
+      .steps b {
+        font:
+          600 20px Georgia,
+          serif;
+      }
+      .steps p {
+        color: var(--mut);
+        margin: 6px 0;
+      }
+      .lp-alt {
+        background: var(--brand2);
+      }
+      .tg {
+        display: inline-flex;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        padding: 4px;
+        margin-bottom: 28px;
+      }
+      .tg button {
+        all: unset;
+        cursor: pointer;
+        padding: 7px 18px;
+        border-radius: 99px;
+        font-size: 14px;
+      }
+      .tg button.on {
+        background: var(--g2);
+        color: #fff;
+      }
+      .pr {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .pl {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 24px;
+        position: relative;
+      }
+      .pl.pop {
+        border: 2px solid var(--g2);
+        transform: translateY(-8px);
+      }
+      .pl .pt {
+        position: absolute;
+        top: -12px;
+        left: 20px;
+        background: var(--am);
+        color: #2a1c00;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 2px 10px;
+        border-radius: 99px;
+      }
+      .pl h3 {
+        font-size: 19px;
+      }
+      .pl .pp {
+        font:
+          600 32px Georgia,
+          serif;
+        margin: 12px 0 2px;
+      }
+      .pl small {
+        color: var(--mut);
+      }
+      .pl ul {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 20px;
+      }
+      .pl li {
+        padding: 5px 0 5px 22px;
+        position: relative;
+        font-size: 14px;
+      }
+      .pl li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--brand);
+        font-weight: 700;
+      }
+      .pl .lb {
+        width: 100%;
+      }
+      .qt {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 30px;
+        align-items: center;
+      }
+      .qt blockquote {
+        margin: 0;
+        font:
+          400 clamp(22px, 2.6vw, 30px)/1.35 Georgia,
+          serif;
+      }
+      .qt cite {
+        display: block;
+        margin-top: 16px;
+        font:
+          14px "Segoe UI",
+          sans-serif;
+        color: var(--mut);
+      }
+      .nums {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .nums div {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+      }
+      .nums b {
+        font:
+          600 34px Georgia,
+          serif;
+        color: var(--brand);
+      }
+      .cta {
+        background: var(--g);
+        color: #fff;
+        border-radius: 28px;
+        padding: 56px 40px;
+        text-align: center;
+      }
+      .cta h2 {
+        margin: 0 auto 12px;
+      }
+      .cta p {
+        color: #bcd9cd;
+        margin: 0 0 24px;
+      }
+      .lp-f {
+        padding: 32px 0 40px;
+        color: var(--mut);
+        font-size: 14px;
+      }
+      @media (max-width: 860px) {
+        .lp-hero .lp-w,
+        .qt {
+          grid-template-columns: 1fr;
+        }
+        .lp-stage {
+          height: 400px;
+        }
+        .bx,
+        .bx.w,
+        .bx.big {
+          grid-column: span 6;
+        }
+        .pr {
+          grid-template-columns: 1fr 1fr;
+        }
+        .steps {
+          grid-template-columns: 1fr;
+        }
+        .lp-nav a.h {
+          display: none;
+        }
+        .pl.pop {
+          transform: none;
+        }
+      }
+      @media (max-width: 520px) {
+        .pr {
+          grid-template-columns: 1fr;
+        }
+        .fc.a {
+          width: 270px;
+        }
+        .fc.b {
+          width: 170px;
+        }
+        .fc.c {
+          top: 210px;
+        }
+      }
+    </style>
+    <div id="lp">
+      <header class="lp-nav">
+        <div class="lp-w">
+          <a class="lp-logo" href="#">Hisob<i>chi</i></a
+          ><a class="h" href="#imk">Imkoniyatlar</a
+          ><a class="h" href="#nar">Narxlar</a
+          ><a class="h" href="#fikr">Mijozlar</a><span class="lp-sp"></span>
+          <div class="lsw">
+            <button data-l="uz" onclick="setLang('uz')">UZ</button
+            ><button data-l="en" onclick="setLang('en')">EN</button
+            ><button data-l="ru" onclick="setLang('ru')">RU</button>
+          </div>
+          <button
+            class="lb o"
+            style="padding: 7px 12px"
+            onclick="theme()"
+            aria-label="Kun / Tun"
+          >
+            ◐</button
+          ><button class="lb" onclick="openApp()">Ilovani ochish</button>
+        </div>
+      </header>
+      <section class="lp-hero">
+        <div class="lp-w">
+          <div style="padding-bottom: 60px">
+            <span class="lp-badge">O'zbekiston bizneslari uchun</span>
+            <h1>Hisob-kitob bir joyda, doim tartibda</h1>
+            <p>
+              Hisob-faktura, xarajat, ombor va hisobotlar — hammasi bitta
+              oynada. Jadval va daftarlar bilan vaqt yo'qotmang.
+            </p>
+            <button class="lb" onclick="openApp()">Bepul sinab ko'rish</button>
+            <button
+              class="lb o"
+              onclick="
+                document
+                  .getElementById('imk')
+                  .scrollIntoView({ behavior: 'smooth' })
+              "
+            >
+              Imkoniyatlarni ko'rish
+            </button>
+          </div>
+          <div class="lp-stage" aria-hidden="true">
+            <div class="fc a">
+              <small>Sof foyda, shu oy</small><b>18 450 000 so'm</b
+              ><svg viewBox="0 0 280 90" width="100%">
+                <path
+                  d="M0 70 C40 60 60 30 100 40 S170 70 210 30 S260 20 280 10"
+                  fill="none"
+                  stroke="#0f5c48"
+                  stroke-width="3"
+                />
+                <path
+                  d="M0 70 C40 60 60 30 100 40 S170 70 210 30 S260 20 280 10 V90 H0Z"
+                  fill="#0f5c48"
+                  opacity=".12"
+                />
+              </svg>
+            </div>
+            <div class="fc b">
+              <small>Hisob-faktura INV-014</small>
+              <div class="mt">
+                <span>Ofis stoli ×3</span><span>5 400 000</span>
+              </div>
+              <div class="mt">
+                <span>Monitor ×1</span><span>3 200 000</span>
+              </div>
+              <p style="margin: 10px 0 0">
+                <b>8 600 000</b><span class="ok">To'langan</span>
+              </p>
+            </div>
+            <div class="fc c">
+              <small>Bank · Kapital Bank ••1234</small><b>70 000 000</b>
+              <div class="mt">
+                <span>Silk Road Travel</span><span class="ok">Mos keldi</span>
+              </div>
+              <div class="mt">
+                <span>Ijara to'lovi</span><span class="ok">Toifalandi</span>
+              </div>
+            </div>
+            <div class="fc d">
+              <small>Ombor · Ergonomik kreslo</small><b>4 dona</b>
+              <div
+                style="
+                  height: 8px;
+                  border-radius: 9px;
+                  background: #e9f3ee;
+                  margin-top: 8px;
+                "
+              >
+                <i
+                  style="
+                    display: block;
+                    width: 30%;
+                    height: 100%;
+                    background: #d98a1c;
+                    border-radius: 9px;
+                  "
+                ></i>
+              </div>
+              <small>Zaxira kam — buyurtma bering</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-sec" id="imk">
+        <div class="lp-w">
+          <h2>Kichik biznes uchun kerak bo'lgan hamma narsa</h2>
+          <p class="sub">
+            Murakkab buxgalteriya so'zlarisiz. Har bir amal bir-ikki bosishda
+            bajariladi.
+          </p>
+          <div class="bento">
+            <div class="bx big">
+              <div class="ic">▤</div>
+              <h3>Hisob-fakturalar va to'lovlar</h3>
+              <p>
+                Fakturani qatorlar bilan yarating, jami avtomatik hisoblanadi.
+                Muddati o'tganlari o'zi ajratib ko'rsatiladi, siz esa faqat
+                kerakli qarzdorga e'tibor berasiz.
+              </p>
+            </div>
+            <div class="bx">
+              <div class="ic">▣</div>
+              <h3>Ombor nazorati</h3>
+              <p>
+                Sotuvda zaxira kamayadi, minimal darajada ogohlantirish chiqadi.
+              </p>
+            </div>
+            <div class="bx">
+              <div class="ic">▼</div>
+              <h3>Xarajatlar</h3>
+              <p>Ijara, maosh, reklama — turkum bo'yicha ko'ring.</p>
+            </div>
+            <div class="bx w">
+              <div class="ic">◔</div>
+              <h3>Foyda va zarar hisoboti</h3>
+              <p>
+                Oy oxirini kutmang: foydangiz hozir qancha ekanini istalgan
+                vaqtda biling.
+              </p>
+            </div>
+            <div class="bx w">
+              <div class="ic">☺</div>
+              <h3>Mijozlar bazasi</h3>
+              <p>
+                Kim qancha xarid qilgan va kimning qarzi bor — bitta jadvalda.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-sec lp-alt">
+        <div class="lp-w">
+          <h2>Uch qadamda ishga tushing</h2>
+          <p class="sub">Dasturni o'rganishga kunlar ketmaydi.</p>
+          <div class="steps">
+            <div>
+              <b>Mijoz va mahsulot qo'shing</b>
+              <p>Bir marta kiritasiz, keyin ro'yxatdan tanlaysiz.</p>
+            </div>
+            <div>
+              <b>Faktura yozing</b>
+              <p>Narx, soni, muddat — jami o'zi hisoblanadi.</p>
+            </div>
+            <div>
+              <b>Hisobotni ko'ring</b>
+              <p>Tushum, xarajat va foyda darhol tayyor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-sec" id="nar">
+        <div class="lp-w">
+          <h2>Biznesingiz hajmiga mos tarif</h2>
+          <p class="sub">
+            Bepul boshlang, o'sganingizda o'tasiz. Narxlar bir tashkilot uchun,
+            oyiga.
+          </p>
+          <div class="tg">
+            <button id="tm" class="on" onclick="bill(0)">Oylik</button
+            ><button id="ty" onclick="bill(1)">Yillik · 25% tejang</button>
+          </div>
+          <div class="pr" id="prs"></div>
+        </div>
+      </section>
+
+      <section class="lp-sec lp-alt" id="fikr">
+        <div class="lp-w qt">
+          <div>
+            <blockquote>
+              Hisobotlarni tayyorlashga ketadigan vaqt keskin qisqardi. Endi har
+              kuni pul qayerda ekanini ko'ramiz.
+            </blockquote>
+            <cite
+              >Dilshod Karimov, direktor — Chorsu Market MChJ, Toshkent</cite
+            >
+          </div>
+          <div class="nums">
+            <div>
+              <b>3 daqiqa</b><br /><span class="mut">faktura yaratish</span>
+            </div>
+            <div>
+              <b>0 so'm</b><br /><span class="mut">boshlash uchun</span>
+            </div>
+            <div><b>6 modul</b><br /><span class="mut">bitta oynada</span></div>
+            <div>
+              <b>24/7</b><br /><span class="mut">istalgan qurilmadan</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-sec">
+        <div class="lp-w">
+          <div class="cta">
+            <h2>Bugun tartibga soling</h2>
+            <p>Kartasiz, ro'yxatdan o'tishsiz — ilovani hoziroq oching.</p>
+            <button class="lb" onclick="openApp()">Ilovani ochish</button>
+          </div>
+        </div>
+      </section>
+      <footer class="lp-f">
+        <div class="lp-w">
+          © 2026 Hisobchi. Demo loyiha — ma'lumotlar faqat sizning
+          brauzeringizda saqlanadi.
+        </div>
+      </footer>
+    </div>
+    <script>
+      const PL = [
+        [
+          "Bepul",
+          "0",
+          "0",
+          "Boshlovchilar uchun",
+          ["Oyiga 5 ta faktura", "1 foydalanuvchi", "Asosiy hisobotlar"],
+        ],
+        [
+          "Standart",
+          "69 000",
+          "52 000",
+          "Kichik biznes",
+          ["Cheksiz faktura", "Xarajatlar nazorati", "Foyda va zarar hisoboti"],
+        ],
+        [
+          "Professional",
+          "129 000",
+          "97 000",
+          "Ombor bilan savdo",
+          ["Ombor va zaxira", "Mijozlar qarzi", "3 foydalanuvchi"],
+          1,
+        ],
+        [
+          "Premium",
+          "249 000",
+          "187 000",
+          "Jamoa uchun",
+          ["Cheksiz foydalanuvchi", "Avtomatik eslatmalar", "Ustuvor yordam"],
+        ],
+      ];
+      function bill(y) {
+        tm.className = y ? "" : "on";
+        ty.className = y ? "on" : "";
+        prs.innerHTML = PL.map(
+          (p) =>
+            `<div class="pl ${p[5] ? "pop" : ""}">${p[5] ? '<span class="pt">Ko\'p tanlanadi</span>' : ""}<h3>${p[0]}</h3><small>${p[3]}</small><div class="pp">${y ? p[2] : p[1]}</div><small>so'm / oy</small><ul>${p[4].map((x) => `<li>${x}</li>`).join("")}</ul><button class="lb ${p[5] ? "d" : "o"}" style="${p[5] ? "" : "color:var(--ink);border-color:var(--line)"}" onclick="openApp()">${p[1] === "0" ? "Bepul boshlash" : "Sinab ko'rish"}</button></div>`,
+        ).join("");
+      }
+      bill(0);
+    </script>
+    <div class="app" id="appw" style="display: none">
+      <aside id="nav"></aside>
+      <main id="v"></main>
+    </div>
+    <script>
+      const DT =
+        "Imkoniyatlar|Features|Возможности\nNarxlar|Pricing|Тарифы\nMijozlar|Customers|Клиенты\nIlovani ochish|Open the app|Открыть приложение\nO'zbekiston bizneslari uchun|For Uzbekistan businesses|Для бизнеса Узбекистана\nHisob-kitob bir joyda, doim tartibda|Your books in one place, always in order|Учёт в одном месте, всегда в порядке\nHisob-faktura, xarajat, ombor va hisobotlar — hammasi bitta oynada. Jadval va daftarlar bilan vaqt yo'qotmang.|Invoices, expenses, inventory and reports — all in one window. Stop losing time to spreadsheets and notebooks.|Счета, расходы, склад и отчёты — всё в одном окне. Не теряйте время на таблицы и тетради.\nBepul sinab ko'rish|Try for free|Попробовать бесплатно\nImkoniyatlarni ko'rish|See features|Смотреть возможности\nSof foyda, shu oy|Net profit, this month|Чистая прибыль за месяц\nHisob-faktura INV-014|Invoice INV-014|Счёт INV-014\nOfis stoli ×3|Office desk ×3|Офисный стол ×3\nMonitor ×1|Monitor ×1|Монитор ×1\nTo'langan|Paid|Оплачен\nBank · Kapital Bank ••1234|Bank · Kapital Bank ••1234|Банк · Kapital Bank ••1234\nMos keldi|Matched|Сверено\nIjara to'lovi|Rent payment|Оплата аренды\nToifalandi|Categorized|Категоризировано\nOmbor · Ergonomik kreslo|Inventory · Ergonomic chair|Склад · Эргономичное кресло\n4 dona|4 pcs|4 шт.\nZaxira kam — buyurtma bering|Low stock — reorder|Мало на складе — закажите\nKichik biznes uchun kerak bo'lgan hamma narsa|Everything a small business needs|Всё, что нужно малому бизнесу\nMurakkab buxgalteriya so'zlarisiz. Har bir amal bir-ikki bosishda bajariladi.|No accounting jargon. Every action takes a click or two.|Без сложных терминов. Любое действие — в пару кликов.\nHisob-fakturalar va to'lovlar|Invoices and payments|Счета и платежи\nFakturani qatorlar bilan yarating, jami avtomatik hisoblanadi. Muddati o'tganlari o'zi ajratib ko'rsatiladi, siz esa faqat kerakli qarzdorga e'tibor berasiz.|Build invoices line by line and the total is calculated for you. Overdue ones are flagged automatically, so you focus only on the debtors that matter.|Составляйте счета по строкам, итог считается сам. Просроченные выделяются автоматически — вы занимаетесь только нужными должниками.\nOmbor nazorati|Inventory control|Контроль склада\nSotuvda zaxira kamayadi, minimal darajada ogohlantirish chiqadi.|Stock drops with each sale, and you get a warning at the minimum level.|При продаже остаток уменьшается, на минимуме — предупреждение.\nXarajatlar|Expenses|Расходы\nIjara, maosh, reklama — turkum bo'yicha ko'ring.|Rent, salaries, advertising — see them by category.|Аренда, зарплата, реклама — смотрите по категориям.\nFoyda va zarar hisoboti|Profit and loss report|Отчёт о прибылях и убытках\nOy oxirini kutmang: foydangiz hozir qancha ekanini istalgan vaqtda biling.|Don't wait for month-end: know your profit right now, any time.|Не ждите конца месяца: узнавайте прибыль в любой момент.\nMijozlar bazasi|Customer database|База клиентов\nKim qancha xarid qilgan va kimning qarzi bor — bitta jadvalda.|Who bought how much and who owes you — in one table.|Кто сколько купил и у кого долг — в одной таблице.\nUch qadamda ishga tushing|Get started in three steps|Начните за три шага\nDasturni o'rganishga kunlar ketmaydi.|No need to spend days learning it.|Не нужно днями изучать программу.\nMijoz va mahsulot qo'shing|Add customers and products|Добавьте клиентов и товары\nBir marta kiritasiz, keyin ro'yxatdan tanlaysiz.|Enter them once, then pick from the list.|Вводите один раз, затем выбираете из списка.\nFaktura yozing|Create an invoice|Выпишите счёт\nNarx, soni, muddat — jami o'zi hisoblanadi.|Price, quantity, due date — the total is automatic.|Цена, количество, срок — итог считается сам.\nHisobotni ko'ring|See your report|Смотрите отчёт\nTushum, xarajat va foyda darhol tayyor.|Revenue, expenses and profit are ready instantly.|Выручка, расходы и прибыль готовы сразу.\nBiznesingiz hajmiga mos tarif|A plan that fits your business|Тариф под размер вашего бизнеса\nBepul boshlang, o'sganingizda o'tasiz. Narxlar bir tashkilot uchun, oyiga.|Start free and upgrade as you grow. Prices are per organization, per month.|Начните бесплатно и переходите по мере роста. Цены за организацию в месяц.\nOylik|Monthly|Помесячно\nYillik · 25% tejang|Yearly · save 25%|Годовой · экономия 25%\nBepul|Free|Бесплатный\nStandart|Standard|Стандарт\nProfessional|Professional|Профессиональный\nPremium|Premium|Премиум\nBoshlovchilar uchun|For beginners|Для начинающих\nKichik biznes|Small business|Малый бизнес\nOmbor bilan savdo|Trade with inventory|Торговля со складом\nJamoa uchun|For teams|Для команд\nso'm / oy|UZS / month|сум / мес.\nOyiga 5 ta faktura|5 invoices per month|5 счетов в месяц\n1 foydalanuvchi|1 user|1 пользователь\nAsosiy hisobotlar|Basic reports|Базовые отчёты\nCheksiz faktura|Unlimited invoices|Безлимит счетов\nXarajatlar nazorati|Expense tracking|Учёт расходов\nOmbor va zaxira|Inventory and stock|Склад и остатки\nMijozlar qarzi|Customer balances|Долги клиентов\n3 foydalanuvchi|3 users|3 пользователя\nCheksiz foydalanuvchi|Unlimited users|Безлимит пользователей\nAvtomatik eslatmalar|Automatic reminders|Автонапоминания\nUstuvor yordam|Priority support|Приоритетная поддержка\nKo'p tanlanadi|Most popular|Популярный\nBepul boshlash|Start free|Начать бесплатно\nSinab ko'rish|Try it|Попробовать\nHisobotlarni tayyorlashga ketadigan vaqt keskin qisqardi. Endi har kuni pul qayerda ekanini ko'ramiz.|Report preparation time dropped sharply. Now we see where the money is every single day.|Время на подготовку отчётов резко сократилось. Теперь мы каждый день видим, где деньги.\nDilshod Karimov, direktor — Chorsu Market MChJ, Toshkent|Dilshod Karimov, director — Chorsu Market LLC, Tashkent|Дилшод Каримов, директор — ООО «Chorsu Market», Ташкент\n3 daqiqa|3 minutes|3 минуты\nfaktura yaratish|to create an invoice|на создание счёта\nboshlash uchun|to get started|чтобы начать\n6 modul|6 modules|6 модулей\nbitta oynada|in one window|в одном окне\nistalgan qurilmadan|from any device|с любого устройства\nBugun tartibga soling|Get organized today|Наведите порядок сегодня\nKartasiz, ro'yxatdan o'tishsiz — ilovani hoziroq oching.|No card, no sign-up — open the app right now.|Без карты и регистрации — откройте приложение прямо сейчас.\n© 2026 Hisobchi. Demo loyiha — ma'lumotlar faqat sizning brauzeringizda saqlanadi.|© 2026 Hisobchi. Demo project — data is stored only in your browser.|© 2026 Hisobchi. Демо-проект — данные хранятся только в вашем браузере.\nHisobchi — kichik biznes uchun hisob-kitob|Hisobchi — accounting for small business|Hisobchi — учёт для малого бизнеса\nBoshqaruv paneli|Dashboard|Панель управления\nHisob-fakturalar|Invoices|Счета\nOmbor|Inventory|Склад\nHisobotlar|Reports|Отчёты\nKun / Tun|Day / Night|День / Ночь\nBosh sahifa|Home page|Главная\nDemo ma'lumot|Reset demo data|Сбросить демо\n+ Yangi hisob-faktura|+ New invoice|+ Новый счёт\nTushum (to'langan)|Revenue (paid)|Выручка (оплачено)\nKutilayotgan to'lovlar|Pending payments|Ожидаемые платежи\nMuddati o'tgan|Overdue|Просрочено\nSof foyda|Net profit|Чистая прибыль\nPul oqimi, oxirgi 6 oy|Cash flow, last 6 months|Денежный поток, 6 мес.\nTushum|Revenue|Выручка\nXarajat|Expense|Расход\nDiqqat talab qiladi|Needs attention|Требует внимания\nHammasi joyida.|All good.|Всё в порядке.\nRaqam|No.|Номер\nMijoz|Customer|Клиент\nSana|Date|Дата\nMuddat|Due|Срок\nHolat|Status|Статус\nSumma|Amount|Сумма\nYuborilgan|Sent|Отправлен\nQoralama|Draft|Черновик\nTo'landi|Mark paid|Оплачено\nO'chirish|Delete|Удалить\n+ Yangi|+ New|+ Новый\nQidirish…|Search…|Поиск…\nHisob-faktura topilmadi. «Yangi» tugmasi bilan yarating.|No invoices found. Create one with the “New” button.|Счета не найдены. Создайте кнопкой «Новый».\nYangi hisob-faktura|New invoice|Новый счёт\nTo'lov muddati|Due date|Срок оплаты\nMahsulot / xizmatlar|Products / services|Товары / услуги\n+ Qator|+ Line|+ Строка\nJami:|Total:|Итого:\nBekor qilish|Cancel|Отмена\nSaqlash|Save|Сохранить\nAvval mijoz qo'shing|Add a customer first|Сначала добавьте клиента\nKamida bitta qator kiriting|Enter at least one line|Введите хотя бы одну строку\nHisob-faktura yaratildi|Invoice created|Счёт создан\nTo'langan deb belgilandi|Marked as paid|Отмечен как оплаченный\nO'chirildi|Deleted|Удалено\nSaqlandi|Saved|Сохранено\nIzoh va summani kiriting|Enter a note and an amount|Введите примечание и сумму\nNom va narxni kiriting|Enter a name and a price|Введите название и цену\nNomini kiriting|Enter a name|Введите название\nOmbor yangilandi|Inventory updated|Склад обновлён\nBarcha ma'lumotlar demo holatiga qaytarilsinmi?|Reset all data to the demo state?|Вернуть все данные к демо-состоянию?\nNechta dona kirim qilindi?|How many units were received?|Сколько единиц поступило?\nTurkum|Category|Категория\nIzoh|Note|Примечание\n+ Xarajat|+ Expense|+ Расход\nXarajat yo'q.|No expenses.|Расходов нет.\nYangi xarajat|New expense|Новый расход\nTurkum (masalan, Ijara)|Category (e.g. Rent)|Категория (напр., Аренда)\nSumma (so'm)|Amount (UZS)|Сумма (сум)\nNarx (so'm)|Price (UZS)|Цена (сум)\nNomi|Name|Название\nBoshlang'ich qoldiq|Opening stock|Начальный остаток\nMinimal zaxira|Minimum stock|Минимальный запас\nTelefon|Phone|Телефон\nYangi mahsulot|New product|Новый товар\n+ Mahsulot|+ Product|+ Товар\nYangi mijoz|New customer|Новый клиент\n+ Mijoz|+ Customer|+ Клиент\nIjara|Rent|Аренда\nMarketing|Marketing|Маркетинг\nMaosh|Salary|Зарплата\nKommunal|Utilities|Коммунальные\nBoshqa|Other|Прочее\nOfis ijarasi|Office rent|Аренда офиса\nReklama|Advertising|Реклама\nXodimlar maoshi|Staff salaries|Зарплата сотрудников\nInternet va elektr|Internet and electricity|Интернет и электричество\nOfis stoli|Office desk|Офисный стол\nErgonomik kreslo|Ergonomic chair|Эргономичное кресло\nMonitor 27\"|Monitor 27\"|Монитор 27\"\nKonsalting (soat)|Consulting (hour)|Консалтинг (час)\nNarx|Price|Цена\nZaxira|Stock|Запас\nQoldiq|On hand|Остаток\nXizmat|Service|Услуга\nBuyurtma bering|Reorder|Заказать\n+ Kirim|+ Receive|+ Приход\nJami savdo|Total sales|Всего продаж\nQarzi|Balance due|Долг\nChop etish / PDF|Print / PDF|Печать / PDF\nSavdo tushumi|Sales revenue|Выручка от продаж\nJami xarajat|Total expenses|Всего расходов\nXarajat tuzilmasi|Expense breakdown|Структура расходов";
+      const LSW =
+        '<div class="lsw"><button data-l="uz" onclick="setLang(\'uz\')">UZ</button><button data-l="en" onclick="setLang(\'en\')">EN</button><button data-l="ru" onclick="setLang(\'ru\')">RU</button></div>';
+      let LG = "uz";
+      try {
+        LG = localStorage.getItem("hl") || "uz";
+      } catch (e) {}
+      const nz = (s) => s.replace(/[‘’ʻ]/g, "'"),
+        D = {};
+      DT.split("\n").forEach((l) => {
+        const p = l.split("|");
+        if (p.length > 2) D[nz(p[0])] = [p[1], p[2]];
+      });
+      const RX = [
+        [
+          /Omborda (\d+) dona qoldi \(minimal (\d+)\)/,
+          "$1 left in stock (min $2)",
+          "Остаток: $1 шт. (мин. $2)",
+        ],
+        [
+          /«(.+)» omborda yetarli emas \((\d+)\)/,
+          "«$1» — not enough in stock ($2)",
+          "«$1» — недостаточно на складе ($2)",
+        ],
+        [/· muddati o'tgan/, "· overdue", "· просрочено"],
+        [/^(INV-\d+) o'chirilsinmi\?/, "Delete $1?", "Удалить $1?"],
+        [/(\d\d)-oy/, "$1", "$1"],
+      ];
+      function tx(s) {
+        if (LG === "uz") return s;
+        const m = s.match(/^(\s*)([\s\S]*?)(\s*)$/),
+          i = LG === "en" ? 0 : 1,
+          k = nz(m[2]);
+        if (!k) return s;
+        let r = D[k] ? D[k][i] : null;
+        if (r == null) {
+          r = k;
+          RX.forEach((x) => {
+            r = r.replace(x[0], x[i + 1]);
+          });
+          r = r.replace(/so'm/g, i ? "сум" : "UZS");
+        }
+        return m[1] + r + m[3];
+      }
+      function one(n) {
+        if (/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)) return;
+        if (n.__o === undefined) n.__o = n.nodeValue;
+        const v = tx(n.__o);
+        if (n.nodeValue !== v) n.nodeValue = v;
+      }
+      function trN(r) {
+        if (r.nodeType === 3) return one(r);
+        const w = document.createTreeWalker(r, 4);
+        let n,
+          a = [];
+        while ((n = w.nextNode())) a.push(n);
+        a.forEach(one);
+        r.querySelectorAll("[placeholder]").forEach((e) => {
+          if (e.__p === undefined) e.__p = e.getAttribute("placeholder");
+          e.placeholder = tx(e.__p);
+        });
+      }
+      new MutationObserver((ms) =>
+        ms.forEach((m) =>
+          m.addedNodes.forEach((n) => {
+            if (n.nodeType === 3 || n.nodeType === 1) trN(n);
+          }),
+        ),
+      ).observe(document.body, { childList: true, subtree: true });
+      const T0 = "Hisobchi — kichik biznes uchun hisob-kitob";
+      function updL() {
+        document
+          .querySelectorAll(".lsw button")
+          .forEach((b) => b.classList.toggle("on", b.dataset.l === LG));
+      }
+      function setLang(l) {
+        LG = l;
+        try {
+          localStorage.setItem("hl", l);
+        } catch (e) {}
+        document.documentElement.lang = l;
+        document.title = tx(T0);
+        trN(document.body);
+        render();
+      }
+      const _cf = window.confirm.bind(window),
+        _pr = window.prompt.bind(window);
+      window.confirm = (m) => _cf(tx(String(m)));
+      window.prompt = (m, d) => _pr(tx(String(m)), d);
+      function openApp() {
+        document.getElementById("lp").style.display = "none";
+        document.getElementById("appw").style.display = "grid";
+        scrollTo(0, 0);
+      }
+      function showLanding() {
+        document.getElementById("lp").style.display = "";
+        document.getElementById("appw").style.display = "none";
+        scrollTo(0, 0);
+      }
+      const $ = (s) => document.querySelector(s);
+      const uid = () => Math.random().toString(36).slice(2, 8);
+      const day = (o = 0) => {
+        const d = new Date();
+        d.setDate(d.getDate() + o);
+        return d.toISOString().slice(0, 10);
+      };
+      const fmt = (n) => Math.round(n).toLocaleString("ru-RU") + " so'm";
+      const seed = () => ({
+        customers: [
+          {
+            id: "c1",
+            name: "Silk Road Travel",
+            email: "info@silkroad.uz",
+            phone: "+998 90 123 45 67",
+          },
+          {
+            id: "c2",
+            name: "Navoiy Textile",
+            email: "buy@navoiytex.uz",
+            phone: "+998 93 555 12 00",
+          },
+          {
+            id: "c3",
+            name: "Chorsu Market MChJ",
+            email: "ofis@chorsu.uz",
+            phone: "+998 71 200 30 40",
+          },
+        ],
+        items: [
+          { id: "i1", name: "Ofis stoli", price: 1800000, stock: 14, min: 5 },
+          {
+            id: "i2",
+            name: "Ergonomik kreslo",
+            price: 2400000,
+            stock: 4,
+            min: 6,
+          },
+          { id: "i3", name: 'Monitor 27"', price: 3200000, stock: 9, min: 3 },
+          {
+            id: "i4",
+            name: "Konsalting (soat)",
+            price: 350000,
+            stock: 0,
+            min: 0,
+            svc: 1,
+          },
+        ],
+        invoices: [
+          {
+            id: "INV-001",
+            cust: "c1",
+            date: day(-40),
+            due: day(-25),
+            status: "paid",
+            lines: [{ item: "i1", qty: 4, price: 1800000 }],
+          },
+          {
+            id: "INV-002",
+            cust: "c2",
+            date: day(-20),
+            due: day(-5),
+            status: "sent",
+            lines: [{ item: "i3", qty: 3, price: 3200000 }],
+          },
+          {
+            id: "INV-003",
+            cust: "c3",
+            date: day(-8),
+            due: day(12),
+            status: "sent",
+            lines: [{ item: "i4", qty: 20, price: 350000 }],
+          },
+          {
+            id: "INV-004",
+            cust: "c1",
+            date: day(-3),
+            due: day(27),
+            status: "paid",
+            lines: [{ item: "i2", qty: 2, price: 2400000 }],
+          },
+        ],
+        expenses: [
+          {
+            id: "e1",
+            date: day(-30),
+            cat: "Ijara",
+            desc: "Ofis ijarasi",
+            amt: 4500000,
+          },
+          {
+            id: "e2",
+            date: day(-18),
+            cat: "Marketing",
+            desc: "Reklama",
+            amt: 1200000,
+          },
+          {
+            id: "e3",
+            date: day(-10),
+            cat: "Maosh",
+            desc: "Xodimlar maoshi",
+            amt: 6000000,
+          },
+          {
+            id: "e4",
+            date: day(-4),
+            cat: "Kommunal",
+            desc: "Internet va elektr",
+            amt: 650000,
+          },
+        ],
+      });
+      let S;
+      try {
+        S = JSON.parse(localStorage.getItem("hisobchi"));
+      } catch (e) {}
+      if (!S) S = seed();
+      const save = () => {
+        try {
+          localStorage.setItem("hisobchi", JSON.stringify(S));
+        } catch (e) {}
+      };
+      const total = (i) => i.lines.reduce((a, l) => a + l.qty * l.price, 0);
+      const cname = (id) =>
+        (S.customers.find((c) => c.id === id) || {}).name || "—";
+      const iname = (id) =>
+        (S.items.find((c) => c.id === id) || {}).name || "—";
+      const st = (i) =>
+        i.status === "sent" && i.due < day() ? "over" : i.status;
+      const SL = {
+        paid: "To'langan",
+        sent: "Yuborilgan",
+        over: "Muddati o‘tgan",
+        draft: "Qoralama",
+      };
+      const tag = (i) => `<span class="tag ${st(i)}">${SL[st(i)]}</span>`;
+      const esc = (s) =>
+        String(s).replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        );
+      const pages = [
+        ["dash", "▦", "Boshqaruv paneli"],
+        ["inv", "▤", "Hisob-fakturalar"],
+        ["exp", "▼", "Xarajatlar"],
+        ["stock", "▣", "Ombor"],
+        ["cust", "☺", "Mijozlar"],
+        ["rep", "◔", "Hisobotlar"],
+      ];
+      let page = "dash",
+        q = "";
+      function toast(t) {
+        const e = document.createElement("div");
+        e.className = "toast";
+        e.textContent = t;
+        document.body.append(e);
+        setTimeout(() => e.remove(), 2000);
+      }
+      function nav() {
+        $("#nav").innerHTML =
+          `<div class="logo">Hisob<i>chi</i></div>` +
+          pages
+            .map(
+              (p) =>
+                `<button class="${p[0] === page ? "on" : ""}" onclick="go('${p[0]}')"><span>${p[1]}</span> ${p[2]}</button>`,
+            )
+            .join("") +
+          `<div class="sp"></div>${LSW}<button onclick="theme()"><span>◐</span> Kun / Tun</button><button onclick="showLanding()"><span>←</span> Bosh sahifa</button><button onclick="if(confirm('Barcha ma\\'lumotlar demo holatiga qaytarilsinmi?')){S=seed();save();render()}"><span>↺</span> Demo ma'lumot</button>`;
+      }
+      function go(p) {
+        page = p;
+        q = "";
+        render();
+      }
+      function theme() {
+        const r = document.documentElement;
+        const d =
+          r.dataset.theme === "dark" ||
+          (!r.dataset.theme &&
+            matchMedia("(prefers-color-scheme:dark)").matches);
+        r.dataset.theme = d ? "light" : "dark";
+        try {
+          localStorage.setItem("ht", r.dataset.theme);
+        } catch (e) {}
+      }
+      function head(t, btn) {
+        return `<div class="top"><h1>${t}</h1><div style="display:flex;gap:8px">${page !== "dash" && page !== "rep" ? `<input class="search" placeholder="Qidirish…" value="${esc(q)}" oninput="q=this.value;body()" id="q">` : ""}${btn || ""}</div></div>`;
+      }
+      function render() {
+        nav();
+        body();
+        updL();
+      }
+      function labelTables() {
+        trN($("#v"));
+        document.querySelectorAll("#v .tw table").forEach((t) => {
+          const r = [...t.rows];
+          const h = r.find((x) => x.querySelector("th"));
+          if (!h) return;
+          const L = [...h.cells].map((c) => c.textContent.trim());
+          h.classList.add("hd");
+          r.forEach((x) => {
+            if (x === h || x.cells.length !== L.length) return;
+            [...x.cells].forEach((c, i) => (c.dataset.label = L[i]));
+          });
+        });
+      }
+      function body() {
+        const f = { dash, inv, exp, stock: stk, cust, rep }[page]();
+        const focus =
+          document.activeElement && document.activeElement.id === "q";
+        $("#v").innerHTML = f;
+        labelTables();
+        if (focus) {
+          const e = $("#q");
+          e.focus();
+          e.setSelectionRange(q.length, q.length);
+        }
+      }
+      const match = (s) => s.toLowerCase().includes(q.toLowerCase());
+      function metrics() {
+        const paid = S.invoices
+          .filter((i) => i.status === "paid")
+          .reduce((a, i) => a + total(i), 0);
+        const recv = S.invoices
+          .filter((i) => i.status === "sent")
+          .reduce((a, i) => a + total(i), 0);
+        const over = S.invoices
+          .filter((i) => st(i) === "over")
+          .reduce((a, i) => a + total(i), 0);
+        const exp = S.expenses.reduce((a, e) => a + e.amt, 0);
+        return { paid, recv, over, exp, profit: paid - exp };
+      }
+      function dash() {
+        const m = metrics();
+        const months = [...Array(6)].map((_, k) => {
+          const d = new Date();
+          d.setMonth(d.getMonth() - 5 + k);
+          return d.toISOString().slice(0, 7);
+        });
+        const inc = months.map((x) =>
+          S.invoices
+            .filter((i) => i.status === "paid" && i.date.startsWith(x))
+            .reduce((a, i) => a + total(i), 0),
+        );
+        const out = months.map((x) =>
+          S.expenses
+            .filter((e) => e.date.startsWith(x))
+            .reduce((a, e) => a + e.amt, 0),
+        );
+        const mx = Math.max(1, ...inc, ...out);
+        const bars = months
+          .map(
+            (x, k) =>
+              `<g><rect x="${k * 90 + 14}" y="${170 - (inc[k] / mx) * 150}" width="30" height="${(inc[k] / mx) * 150}" rx="3" fill="var(--brand)"/><rect x="${k * 90 + 46}" y="${170 - (out[k] / mx) * 150}" width="30" height="${(out[k] / mx) * 150}" rx="3" fill="var(--acc)"/><text x="${k * 90 + 45}" y="190" text-anchor="middle" font-size="12" fill="var(--mut)">${x.slice(5)}-oy</text></g>`,
+          )
+          .join("");
+        const low = S.items.filter((i) => !i.svc && i.stock <= i.min);
+        const late = S.invoices.filter((i) => st(i) === "over");
+        return (
+          head(
+            "Boshqaruv paneli",
+            `<button class="btn p" onclick="invForm()">+ Yangi hisob-faktura</button>`,
+          ) +
+          `
+ <div class="grid"><div class="card kpi"><small>Tushum (to'langan)</small><b style="color:var(--ok)">${fmt(m.paid)}</b></div>
+ <div class="card kpi"><small>Kutilayotgan to'lovlar</small><b>${fmt(m.recv)}</b></div>
+ <div class="card kpi"><small>Muddati o'tgan</small><b style="color:var(--red)">${fmt(m.over)}</b></div>
+ <div class="card kpi"><small>Sof foyda</small><b>${fmt(m.profit)}</b></div></div>
+ <div class="two"><div class="card"><b>Pul oqimi, oxirgi 6 oy</b><div class="mut" style="font-size:13px"><span style="color:var(--brand)">■</span> Tushum &nbsp;<span style="color:var(--acc)">■</span> Xarajat</div>
+ <svg viewBox="0 0 540 200" width="100%" role="img" aria-label="Oylik tushum va xarajat">${bars}</svg></div>
+ <div class="card"><b>Diqqat talab qiladi</b>
+ ${late.map((i) => `<p>${i.id} — ${esc(cname(i.cust))}<br><span class="mut">${fmt(total(i))} · muddati o'tgan</span></p>`).join("")}
+ ${low.map((i) => `<p>${esc(i.name)}<br><span class="mut">Omborda ${i.stock} dona qoldi (minimal ${i.min})</span></p>`).join("")}
+ ${late.length + low.length ? "" : '<p class="mut">Hammasi joyida.</p>'}</div></div>`
+        );
+      }
+      function inv() {
+        const rows = S.invoices
+          .filter((i) => match(i.id + cname(i.cust)))
+          .slice()
+          .reverse()
+          .map(
+            (i) =>
+              `<tr><td>${i.id}</td><td>${esc(cname(i.cust))}</td><td>${i.date}</td><td>${i.due}</td><td>${tag(i)}</td><td class="n">${fmt(total(i))}</td><td class="n">${i.status !== "paid" ? `<button class="btn s" onclick="pay('${i.id}')">To'landi</button> ` : ""}<button class="btn s" onclick="delInv('${i.id}')">O'chirish</button></td></tr>`,
+          )
+          .join("");
+        return (
+          head(
+            "Hisob-fakturalar",
+            `<button class="btn p" onclick="invForm()">+ Yangi</button>`,
+          ) +
+          `<div class="card tw"><table><tr><th>Raqam<th>Mijoz<th>Sana<th>Muddat<th>Holat<th class="n">Summa<th></tr>${rows || '<tr><td colspan=7 class="mut">Hisob-faktura topilmadi. «Yangi» tugmasi bilan yarating.</td></tr>'}</table></div>`
+        );
+      }
+      function pay(id) {
+        S.invoices.find((i) => i.id === id).status = "paid";
+        save();
+        render();
+        toast("To'langan deb belgilandi");
+      }
+      function delInv(id) {
+        if (!confirm(id + " o‘chirilsinmi?")) return;
+        S.invoices = S.invoices.filter((i) => i.id !== id);
+        save();
+        render();
+        toast("O'chirildi");
+      }
+      function invForm() {
+        if (!S.customers.length) return toast("Avval mijoz qo'shing");
+        const m = document.createElement("div");
+        m.className = "modal";
+        m.id = "m";
+        m.innerHTML = `<div class="card"><h1 style="font-size:20px">Yangi hisob-faktura</h1>
+ <label>Mijoz</label><select id="fc">${S.customers.map((c) => `<option value="${c.id}">${esc(c.name)}</option>`).join("")}</select>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>Sana</label><input type="date" id="fd" value="${day()}"></div><div><label>To'lov muddati</label><input type="date" id="fdu" value="${day(15)}"></div></div>
+ <label>Mahsulot / xizmatlar</label><div id="ls"></div><button class="btn s" onclick="addLine()">+ Qator</button>
+ <p style="text-align:right">Jami: <b id="tt">0</b></p>
+ <div class="f"><button class="btn" onclick="$('#m').remove()">Bekor qilish</button><button class="btn p" onclick="saveInv()">Saqlash</button></div></div>`;
+        document.body.append(m);
+        addLine();
+      }
+      function addLine() {
+        const d = document.createElement("div");
+        d.className = "row";
+        d.innerHTML = `<select onchange="pick(this)">${S.items.map((i) => `<option value="${i.id}" data-p="${i.price}">${esc(i.name)}</option>`).join("")}</select><input type="number" min="1" value="1" oninput="sum()"><input type="number" min="0" value="${S.items[0].price}" oninput="sum()"><button class="btn s" onclick="this.parentNode.remove();sum()">×</button>`;
+        $("#ls").append(d);
+        sum();
+      }
+      function pick(s) {
+        s.parentNode.children[2].value = s.selectedOptions[0].dataset.p;
+        sum();
+      }
+      function lines() {
+        return [...document.querySelectorAll("#ls .row")]
+          .map((r) => ({
+            item: r.children[0].value,
+            qty: +r.children[1].value || 0,
+            price: +r.children[2].value || 0,
+          }))
+          .filter((l) => l.qty > 0);
+      }
+      function sum() {
+        $("#tt").textContent = fmt(
+          lines().reduce((a, l) => a + l.qty * l.price, 0),
+        );
+      }
+      function saveInv() {
+        const ls = lines();
+        if (!ls.length) return toast("Kamida bitta qator kiriting");
+        for (const l of ls) {
+          const it = S.items.find((i) => i.id === l.item);
+          if (!it.svc && l.qty > it.stock)
+            return toast(`«${it.name}» omborda yetarli emas (${it.stock})`);
+        }
+        ls.forEach((l) => {
+          const it = S.items.find((i) => i.id === l.item);
+          if (!it.svc) it.stock -= l.qty;
+        });
+        const n =
+          Math.max(0, ...S.invoices.map((i) => +i.id.slice(4) || 0)) + 1;
+        S.invoices.push({
+          id: "INV-" + String(n).padStart(3, "0"),
+          cust: $("#fc").value,
+          date: $("#fd").value,
+          due: $("#fdu").value,
+          status: "sent",
+          lines: ls,
+        });
+        save();
+        $("#m").remove();
+        page = "inv";
+        render();
+        toast("Hisob-faktura yaratildi");
+      }
+      function exp() {
+        const rows = S.expenses
+          .filter((e) => match(e.desc + e.cat))
+          .slice()
+          .reverse()
+          .map(
+            (e) =>
+              `<tr><td>${e.date}</td><td><span class="tag">${esc(e.cat)}</span></td><td>${esc(e.desc)}</td><td class="n">${fmt(e.amt)}</td><td class="n"><button class="btn s" onclick="S.expenses=S.expenses.filter(x=>x.id!=='${e.id}');save();render()">O'chirish</button></td></tr>`,
+          )
+          .join("");
+        return (
+          head(
+            "Xarajatlar",
+            `<button class="btn p" onclick="expForm()">+ Xarajat</button>`,
+          ) +
+          `<div class="card tw"><table><tr><th>Sana<th>Turkum<th>Izoh<th class="n">Summa<th></tr>${rows || '<tr><td colspan=5 class="mut">Xarajat yo\'q.</td></tr>'}</table></div>`
+        );
+      }
+      function simple(title, fields, cb) {
+        const m = document.createElement("div");
+        m.className = "modal";
+        m.id = "m";
+        m.innerHTML = `<div class="card"><h1 style="font-size:20px">${title}</h1>${fields.map((f) => `<label>${f[1]}</label><input id="f_${f[0]}" type="${f[2] || "text"}" value="${f[3] || ""}">`).join("")}<div class="f"><button class="btn" onclick="$('#m').remove()">Bekor qilish</button><button class="btn p" id="ok">Saqlash</button></div></div>`;
+        document.body.append(m);
+        $("#ok").onclick = () => {
+          const v = {};
+          fields.forEach((f) => (v[f[0]] = $("#f_" + f[0]).value.trim()));
+          if (cb(v) !== false) {
+            save();
+            m.remove();
+            render();
+            toast("Saqlandi");
+          }
+        };
+        $("#f_" + fields[0][0]).focus();
+      }
+      function expForm() {
+        simple(
+          "Yangi xarajat",
+          [
+            ["desc", "Izoh"],
+            ["cat", "Turkum (masalan, Ijara)"],
+            ["amt", "Summa (so'm)", "number"],
+            ["date", "Sana", "date", day()],
+          ],
+          (v) => {
+            if (!v.desc || !(+v.amt > 0)) {
+              toast("Izoh va summani kiriting");
+              return false;
+            }
+            S.expenses.push({
+              id: uid(),
+              date: v.date,
+              cat: v.cat || "Boshqa",
+              desc: v.desc,
+              amt: +v.amt,
+            });
+          },
+        );
+      }
+      function stk() {
+        const rows = S.items
+          .filter((i) => match(i.name))
+          .map((i) => {
+            const low = !i.svc && i.stock <= i.min;
+            const pct = i.svc
+              ? 0
+              : Math.min(100, (i.stock / Math.max(i.min * 2, 1)) * 100);
+            return `<tr><td>${esc(i.name)}</td><td class="n">${fmt(i.price)}</td><td>${i.svc ? '<span class="mut">Xizmat</span>' : `<div class="bar" style="width:120px"><i style="width:${pct}%"></i></div>`}</td><td class="n">${i.svc ? "—" : i.stock}</td><td>${low ? '<span class="tag low">Buyurtma bering</span>' : ""}</td><td class="n">${i.svc ? "" : `<button class="btn s" onclick="restock('${i.id}')">+ Kirim</button>`}</td></tr>`;
+          })
+          .join("");
+        return (
+          head(
+            "Ombor",
+            `<button class="btn p" onclick="itemForm()">+ Mahsulot</button>`,
+          ) +
+          `<div class="card tw"><table><tr><th>Nomi<th class="n">Narx<th>Zaxira<th class="n">Qoldiq<th><th></tr>${rows}</table></div>`
+        );
+      }
+      function restock(id) {
+        const n = +prompt("Nechta dona kirim qilindi?", "10");
+        if (n > 0) {
+          S.items.find((i) => i.id === id).stock += n;
+          save();
+          render();
+          toast("Ombor yangilandi");
+        }
+      }
+      function itemForm() {
+        simple(
+          "Yangi mahsulot",
+          [
+            ["name", "Nomi"],
+            ["price", "Narx (so'm)", "number"],
+            ["stock", "Boshlang'ich qoldiq", "number", "0"],
+            ["min", "Minimal zaxira", "number", "3"],
+          ],
+          (v) => {
+            if (!v.name || !(+v.price >= 0)) {
+              toast("Nom va narxni kiriting");
+              return false;
+            }
+            S.items.push({
+              id: uid(),
+              name: v.name,
+              price: +v.price,
+              stock: +v.stock || 0,
+              min: +v.min || 0,
+            });
+          },
+        );
+      }
+      function cust() {
+        const rows = S.customers
+          .filter((c) => match(c.name + c.email))
+          .map((c) => {
+            const t = S.invoices
+              .filter((i) => i.cust === c.id)
+              .reduce((a, i) => a + total(i), 0);
+            const d = S.invoices
+              .filter((i) => i.cust === c.id && i.status !== "paid")
+              .reduce((a, i) => a + total(i), 0);
+            return `<tr><td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.phone)}</td><td class="n">${fmt(t)}</td><td class="n">${d ? `<span style="color:var(--red)">${fmt(d)}</span>` : "—"}</td></tr>`;
+          })
+          .join("");
+        return (
+          head(
+            "Mijozlar",
+            `<button class="btn p" onclick="custForm()">+ Mijoz</button>`,
+          ) +
+          `<div class="card tw"><table><tr><th>Nomi<th>Email<th>Telefon<th class="n">Jami savdo<th class="n">Qarzi</tr>${rows}</table></div>`
+        );
+      }
+      function custForm() {
+        simple(
+          "Yangi mijoz",
+          [
+            ["name", "Nomi"],
+            ["email", "Email", "email"],
+            ["phone", "Telefon"],
+          ],
+          (v) => {
+            if (!v.name) {
+              toast("Nomini kiriting");
+              return false;
+            }
+            S.customers.push({ id: uid(), ...v });
+          },
+        );
+      }
+      function rep() {
+        const m = metrics();
+        const cats = {};
+        S.expenses.forEach((e) => (cats[e.cat] = (cats[e.cat] || 0) + e.amt));
+        const mxc = Math.max(1, ...Object.values(cats));
+        const csv = () => "";
+        return (
+          head(
+            "Hisobotlar",
+            `<button class="btn" onclick="window.print()">Chop etish / PDF</button>`,
+          ) +
+          `<div class="two"><div class="card"><b>Foyda va zarar hisoboti</b><table style="margin-top:8px">
+ <tr><td>Savdo tushumi</td><td class="n">${fmt(m.paid)}</td></tr>
+ ${Object.entries(cats)
+   .map(
+     ([k, v]) =>
+       `<tr><td class="mut">${esc(k)}</td><td class="n">− ${fmt(v)}</td></tr>`,
+   )
+   .join("")}
+ <tr><td><b>Jami xarajat</b></td><td class="n"><b>${fmt(m.exp)}</b></td></tr>
+ <tr><td><b>Sof foyda</b></td><td class="n"><b style="color:${m.profit >= 0 ? "var(--ok)" : "var(--red)"}">${fmt(m.profit)}</b></td></tr></table></div>
+ <div class="card"><b>Xarajat tuzilmasi</b>${Object.entries(cats)
+   .map(
+     ([k, v]) =>
+       `<p style="margin:12px 0 4px">${esc(k)} <span class="mut">${fmt(v)}</span></p><div class="bar"><i style="width:${(v / mxc) * 100}%"></i></div>`,
+   )
+   .join("")}</div></div>`
+        );
+      }
+      try {
+        const t = localStorage.getItem("ht");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      document.documentElement.lang = LG;
+      document.title = tx(T0);
+      render();
+      trN(document.body);
+    </script>
+    <style id="responsive">
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        overflow-x: clip;
+      }
+      .app {
+        min-height: 100dvh;
+      }
+      aside {
+        height: 100dvh;
+      }
+      .modal .card {
+        max-height: 90dvh;
+      }
+      .toast {
+        max-width: 90vw;
+        text-align: center;
+        bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      }
+      @media (max-width: 1000px) {
+        .pr {
+          grid-template-columns: 1fr 1fr;
+        }
+        .pl.pop {
+          transform: none;
+        }
+      }
+      @media (max-width: 800px) {
+        aside {
+          position: sticky;
+          top: 0;
+          z-index: 8;
+          height: auto;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: center;
+          overflow-x: auto;
+          overscroll-behavior-x: contain;
+          scrollbar-width: none;
+          padding: 8px 10px;
+          gap: 2px;
+        }
+        aside::-webkit-scrollbar {
+          display: none;
+        }
+        aside > * {
+          flex-shrink: 0;
+          white-space: nowrap;
+        }
+        .logo {
+          width: auto;
+          padding: 4px 10px 4px 6px;
+          font-size: 20px;
+        }
+        aside button {
+          padding: 9px 12px;
+          min-height: 40px;
+        }
+        aside .lsw {
+          margin: 0 4px;
+          align-self: center;
+        }
+        main {
+          padding: 16px 14px 28px;
+        }
+        h1 {
+          font-size: 22px;
+        }
+        .top > div {
+          width: 100%;
+        }
+        .search {
+          max-width: none;
+          flex: 1;
+          min-width: 0;
+        }
+      }
+      @media (max-width: 720px) {
+        input,
+        select {
+          font-size: 16px;
+          min-height: 42px;
+        }
+        .btn {
+          min-height: 40px;
+        }
+        .btn.s {
+          padding: 8px 12px;
+          min-height: 38px;
+        }
+        .modal {
+          align-items: flex-end;
+          padding: 0;
+        }
+        .modal .card {
+          max-width: none;
+          border-radius: 16px 16px 0 0;
+          max-height: 92dvh;
+          padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        }
+        .row {
+          grid-template-columns: 1fr 1fr auto;
+        }
+        .row select {
+          grid-column: 1/-1;
+        }
+        .f .btn {
+          flex: 1;
+        }
+        .card.tw {
+          background: none;
+          border: 0;
+          padding: 0;
+          overflow: visible;
+        }
+        .tw table,
+        .tw tbody,
+        .tw tr,
+        .tw td {
+          display: block;
+          width: 100%;
+        }
+        .tw tr.hd {
+          display: none;
+        }
+        .tw tr {
+          background: var(--card);
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          padding: 4px 14px;
+          margin-bottom: 10px;
+        }
+        .tw td {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          white-space: normal;
+          text-align: right;
+          padding: 9px 0;
+        }
+        .tw td::before {
+          content: attr(data-label);
+          color: var(--mut);
+          font-size: 13px;
+          text-align: left;
+          flex-shrink: 0;
+        }
+        .tw td:not([data-label]),
+        .tw td[data-label=""] {
+          justify-content: flex-end;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .tw td:not([data-label])::before,
+        .tw td[data-label=""]::before {
+          display: none;
+        }
+        .tw td[colspan] {
+          justify-content: center;
+          text-align: center;
+        }
+        .card:not(.tw) td {
+          white-space: normal;
+        }
+        .card:not(.tw) td.n {
+          white-space: nowrap;
+        }
+      }
+      @media (max-width: 600px) {
+        .lp-w {
+          padding: 0 16px;
+        }
+        .lp-nav .lp-w {
+          height: 56px;
+          gap: 6px;
+        }
+        .lp-logo {
+          font-size: 20px;
+        }
+        .lp-nav .lb {
+          padding: 7px 10px;
+          font-size: 13px;
+        }
+        .lp-nav .lsw button {
+          padding: 5px 7px;
+        }
+        .lp-hero {
+          padding-top: 36px;
+        }
+        .lp-hero p {
+          font-size: 16px;
+        }
+        .lp-hero .lp-w > div:first-child {
+          padding-bottom: 28px !important;
+        }
+        .lp-hero .lb {
+          margin: 0 6px 8px 0;
+        }
+        .lp-stage {
+          height: auto;
+          display: grid;
+          gap: 14px;
+          padding-bottom: 40px;
+        }
+        .fc {
+          position: static;
+          width: auto !important;
+          transform: none !important;
+        }
+        .fc.c,
+        .fc.d {
+          display: none;
+        }
+        .lp-sec {
+          padding: 48px 0;
+        }
+        .lp-sec .sub {
+          font-size: 16px;
+          margin-bottom: 24px;
+        }
+        .bx {
+          padding: 20px;
+          min-height: 0;
+        }
+        .steps div {
+          padding: 20px 0 0;
+        }
+        .nums {
+          gap: 10px;
+        }
+        .nums div {
+          padding: 14px;
+        }
+        .nums b {
+          font-size: 24px;
+        }
+        .cta {
+          padding: 36px 20px;
+          border-radius: 20px;
+        }
+        .tg button {
+          padding: 7px 12px;
+          font-size: 13px;
+        }
+      }
+      @media (max-width: 480px) {
+        .lp-nav .lb:not(.o) {
+          display: none;
+        }
+        .pr {
+          grid-template-columns: 1fr;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </body>
+</html>
